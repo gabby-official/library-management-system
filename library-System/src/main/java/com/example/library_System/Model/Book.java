@@ -1,9 +1,6 @@
 package com.example.library_System.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -22,7 +19,6 @@ public class Book {
     @NotBlank
     private  String author;
 
-    @NotNull
     private Boolean available;
 
     @NotNull
@@ -65,11 +61,11 @@ public class Book {
         this.author = author;
     }
 
-    public @NotNull @NotBlank Boolean getAvailable() {
+    public  Boolean getAvailable() {
         return available;
     }
 
-    public void setAvailable(@NotNull @NotBlank Boolean available) {
+    public void setAvailable(Boolean available) {
         this.available = available;
     }
 
@@ -80,4 +76,5 @@ public class Book {
     public void setCategory(@NotNull @NotBlank String category) {
         this.category = category;
     }
+
 }

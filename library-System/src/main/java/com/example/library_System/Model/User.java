@@ -1,13 +1,13 @@
 package com.example.library_System.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,15 +28,37 @@ public class User {
     @NotNull
     private int level;
 
-    public User(int id, String fname, String lname, int level, String department) {
+    @Email
+    @NotNull
+    private String email;
+
+    @Enumerated(EnumType.STRING)
+    private ROLES role;
+
+    @NotNull
+    private String password;
+
+
+    public User(int id, String lname, String fname, String department, int level, String email, ROLES role, String password) {
         this.id = id;
-        this.fname = fname;
         this.lname = lname;
-        this.level = level;
+        this.fname = fname;
         this.department = department;
+        this.level = level;
+        this.email = email;
+        this.role = role;
+        this.password = password;
     }
 
-    public User(){
+    public User() {
+    }
+
+    public @NotNull @NotBlank String getFname() {
+        return fname;
+    }
+
+    public void setFname(@NotNull @NotBlank String fname) {
+        this.fname = fname;
     }
 
     public int getId() {
@@ -47,12 +69,12 @@ public class User {
         this.id = id;
     }
 
-    public @NotNull int getLevel() {
-        return level;
+    public @NotNull @NotBlank String getLname() {
+        return lname;
     }
 
-    public void setLevel(@NotNull int level) {
-        this.level = level;
+    public void setLname(@NotNull @NotBlank String lname) {
+        this.lname = lname;
     }
 
     public @NotNull @NotBlank String getDepartment() {
@@ -63,19 +85,35 @@ public class User {
         this.department = department;
     }
 
-    public @NotNull @NotBlank String getLname() {
-        return lname;
+    public @Email @NotNull String getEmail() {
+        return email;
     }
 
-    public void setLname(@NotNull @NotBlank String lname) {
-        this.lname = lname;
+    public void setEmail(@Email @NotNull String email) {
+        this.email = email;
     }
 
-    public @NotNull @NotBlank String getFname() {
-        return fname;
+    public @NotNull int getLevel() {
+        return level;
     }
 
-    public void setFname(@NotNull @NotBlank String fname) {
-        this.fname = fname;
+    public void setLevel(@NotNull int level) {
+        this.level = level;
+    }
+
+    public ROLES getRole() {
+        return role;
+    }
+
+    public void setRole(ROLES role) {
+        this.role = role;
+    }
+
+    public @NotNull String getPassword() {
+        return password;
+    }
+
+    public void setPassword(@NotNull String password) {
+        this.password = password;
     }
 }

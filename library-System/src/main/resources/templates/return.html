@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h2>Return Book</h2>
+
+<p th:if="${error}" th:text="${error}" style="color:red;"></p>
+
+<form action="/return" method="post">
+
+  <input type="number" name="bookId" placeholder="Book ID">
+  <br><br>
+
+  <button type="submit">Return</button>
+
+</form>
+
+</body>
+</html>

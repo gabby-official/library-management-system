@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Book</title>
+</head>
+<body>
+
+<h1>Edit Book</h1>
+
+<form th:action="@{'/books/edit/' + ${book.id}}" method="post" th:object="${book}">
+
+    <input type="text" th:field="*{title}">
+    <br><br>
+
+    <input type="text" th:field="*{author}">
+    <br><br>
+
+    <input type="text" th:field="*{category}">
+    <br><br>
+
+    <button type="submit">Update</button>
+
+</form>
+<p th:if="${error}" th:text="${error}" style="color:red;"></p>
+</body>
+</html>

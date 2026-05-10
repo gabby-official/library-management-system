@@ -3,35 +3,34 @@ package com.example.library_System.controllers;
 import com.example.library_System.Model.ROLES;
 import com.example.library_System.Model.User;
 import com.example.library_System.Services.BookService;
-import com.example.library_System.Services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class UserController {
-    @Autowired
-    UserService userService;
-
+public class AdminController {
     @Autowired
     BookService bookService;
 
-    @GetMapping("/")
-    public String getIndex(HttpSession session, Model model){
+    @GetMapping("/admin")
+    public String adminPage(HttpSession session,
+                            Model model) {
 
         User user = (User) session.getAttribute("loggedInUser");
 
-        if (user == null) {
+        if (user == null ||
+                user.getRole() != ROLES.ADMIN_USER) {
+
             return "redirect:/login";
         }
 
-        model.addAttribute("books", bookService.getAllBooks());
+        model.addAttribute(
+                "books",
+                bookService.getAllBooks()
+        );
 
-        return "books";
+        return "admin_dashboard";
     }
 }

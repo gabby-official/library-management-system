@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Admin Dashboard</title>
+</head>
+<body>
+
+<h1>Admin Dashboard</h1>
+
+<!-- Show admin info -->
+<p>
+  Welcome,
+  <span th:text="${session.loggedInUser != null ? session.loggedInUser.fname : 'Guest'}"></span></p>
+
+<hr>
+
+<!-- Navigation -->
+<h3>Admin Actions</h3>
+
+<ul>
+  <li><a href="/add_book">Add Book</a></li>
+  <li><a href="/loans">View All Loans</a></li>
+</ul>
+
+<hr>
+
+<!-- Book list (optional if you pass books to model) -->
+<h3>All Books</h3>
+
+<table border="1">
+  <tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Author</th>
+    <th>Category</th>
+    <th>Available</th>
+    <th>Action</th>
+  </tr>
+
+  <tr th:each="book : ${books}">
+    <td th:text="${book.id}"></td>
+    <td th:text="${book.title}"></td>
+    <td th:text="${book.author}"></td>
+    <td th:text="${book.category}"></td>
+    <td th:text="${book.available}"></td>
+
+    <td>
+      <a th:href="@{'/books/edit/' + ${book.id}}">Edit</a>
+      <a th:href="@{'/books/delete/' + ${book.id}}">Delete</a>
+    </td>
+  </tr>
+</table>
+
+<hr>
+
+<!-- Logout -->
+<form action="/logout" method="post">
+  <button type="submit">Logout</button>
+</form>
+
+<!-- Error display -->
+<p th:text="${error}" style="color:red;"></p>
+
+</body>
+</html>

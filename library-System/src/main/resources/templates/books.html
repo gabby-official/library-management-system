@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Books</title>
+</head>
+<body>
+
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+
+<h1>All Books</h1>
+
+<a href="/myloans">My Loans</a>
+
+<br><br>
+
+<form action="/books/search" method="get">
+    <input type="text" name="keyword" placeholder="Search">
+    <button type="submit">Search</button>
+</form>
+
+<br>
+
+<table border="1">
+
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Available</th>
+        <th>Action</th>
+    </tr>
+
+    <tr th:each="book : ${books}">
+
+        <td th:text="${book.title}"></td>
+
+        <td th:text="${book.author}"></td>
+
+        <td th:text="${book.available}"></td>
+
+        <td>
+
+            <!-- If available -->
+            <form th:if="${book.available}"
+                  th:action="@{'/borrow/' + ${book.id}}"
+                  method="post">
+
+                <button type="submit">
+                    Borrow
+                </button>
+
+            </form>
+
+            <!-- If already borrowed -->
+            <button th:if="${!book.available}"
+                    disabled>
+                Loaned
+            </button>
+
+        </td>
+
+    </tr>
+
+</table>
+
+<p th:if="${error}"
+   th:text="${error}"
+   style="color:red;">
+</p>
+
+</body>
+</html>

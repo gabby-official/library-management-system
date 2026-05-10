@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h2>All Loans</h2>
+
+<table border="1">
+
+  <tr>
+    <th>Book</th>
+    <th>User</th>
+    <th>Status</th>
+    <th>Borrow Date</th>
+    <th>Return Date</th>
+    <th>Action</th>
+  </tr>
+
+  <tr th:each="loan : ${loans}">
+    <td th:text="${loan.book.title}"></td>
+    <td th:text="${loan.user.email}"></td>
+    <td th:text="${loan.status}"></td>
+    <td th:text="${loan.borrowDate}"></td>
+    <td th:text="${loan.returnDate}"></td>
+
+    <td>
+
+      <!-- Show return button only if borrowed -->
+      <form th:if="${loan.status.name() == 'BORROWED'}"
+            th:action="@{'/return/' + ${loan.book.id}}"
+            method="post">
+
+        <button type="submit">
+          Return
+        </button>
+
+      </form>
+
+      <!-- Already returned -->
+      <button th:if="${loan.status.name() == 'RETURNED'}"
+              disabled>
+        Returned
+      </button>
+
+    </td>
+
+  </tr>
+
+</table>
+
+</body>
+</html>

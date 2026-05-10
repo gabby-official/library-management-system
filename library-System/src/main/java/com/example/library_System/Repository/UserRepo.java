@@ -12,4 +12,8 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 
     List<User> findByLevel(int level);
 
+    User findByEmail(String email);
+
+    boolean existsByEmail(String email);
+
 }

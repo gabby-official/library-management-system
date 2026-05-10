@@ -20,16 +20,14 @@ public class Loan {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @NotNull
     private Date borrowDate;
 
     private Date returnDate;
 
-    @NotNull
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private LoanStatus status;
 
-
-    public Loan(int id, Book book, User user, Date borrowDate, Date returnDate, String status) {
+    public Loan(int id, Book book, User user, Date borrowDate, Date returnDate, LoanStatus status) {
         this.id = id;
         this.book = book;
         this.user = user;
@@ -49,43 +47,43 @@ public class Loan {
         this.id = id;
     }
 
-    public @NotNull @NotBlank Book getBook() {
+    public Book getBook() {
         return book;
     }
 
-    public void setBook(@NotNull @NotBlank Book book) {
+    public void setBook(Book book) {
         this.book = book;
     }
 
-    public @NotNull @NotBlank User getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(@NotNull @NotBlank User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
-    public @NotNull @NotBlank Date getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(@NotNull @NotBlank Date returnDate) {
-        this.returnDate = returnDate;
-    }
-
-    public @NotNull @NotBlank Date getBorrowDate() {
+    public Date getBorrowDate() {
         return borrowDate;
     }
 
-    public void setBorrowDate(@NotNull @NotBlank Date borrowDate) {
+    public void setBorrowDate(Date borrowDate) {
         this.borrowDate = borrowDate;
     }
 
-    public @NotNull @NotBlank String getStatus() {
+    public Date getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(Date returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    public LoanStatus getStatus() {
         return status;
     }
 
-    public void setStatus(@NotNull @NotBlank String status) {
+    public void setStatus(LoanStatus status) {
         this.status = status;
     }
 }

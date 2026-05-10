@@ -15,6 +15,7 @@ public class BookService {
 
     // ➤ Add new book
     public Book addBook(Book book) {
+        book.setAvailable(true);
         return bookRepo.save(book);
     }
 
@@ -35,7 +36,6 @@ public class BookService {
 
         book.setTitle(updatedBook.getTitle());
         book.setAuthor(updatedBook.getAuthor());
-        book.setAvailable(updatedBook.getAvailable());
 
         return bookRepo.save(book);
     }
@@ -46,19 +46,15 @@ public class BookService {
     }
 
     // ➤ Search by title or author
-    public List<Book> searchByTitleOrAuthor(String title, String author) {
-        return bookRepo.findByTitleOrAuthor(title, author);
+    public List<Book> searchByTitleOrAuthor(String keyword){
+
+        return bookRepo
+                .findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCase(
+                        keyword,
+                        keyword
+                );
     }
 
-    // ➤ Search by title
-    public List<Book> searchByTitle(String title) {
-        return bookRepo.findByTitle(title);
-    }
-
-    // ➤ Search by author
-    public List<Book> searchByAuthor(String author) {
-        return bookRepo.findByAuthor(author);
-    }
 
     // ➤ Get available books
     public List<Book> getAvailableBooks() {

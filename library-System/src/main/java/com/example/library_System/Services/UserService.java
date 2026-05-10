@@ -1,4 +1,5 @@
 package com.example.library_System.Services;
+import com.example.library_System.Model.ROLES;
 import com.example.library_System.Model.User;
 import com.example.library_System.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,24 @@ public class UserService {
 
     // ➤ Add new user
     public User addUser(User user) {
+
+        if(userRepo.existsByEmail(user.getEmail())){
+            throw new RuntimeException("Email already exists");
+        }
+        if(user.getFname().isEmpty() ||
+                user.getLname().isEmpty() ||
+                user.getDepartment().isEmpty() ||
+                user.getEmail().isEmpty() ||
+                user.getPassword().isEmpty()){
+
+            throw new RuntimeException("All fields are required");
+        }
+        if(user.getPassword().length() < 6){
+            throw new RuntimeException("Password must be at least 6 characters");
+        }
+        user.setRole(ROLES.NORMAL_USER);
         return userRepo.save(user);
     }
-
     // ➤ Get all users
     public List<User> getAllUsers() {
         return userRepo.findAll();
@@ -59,5 +75,21 @@ public class UserService {
     // ➤ Search by level
     public List<User> getByLevel(int level) {
         return userRepo.findByLevel(level);
+    }
+
+    public User postLogin(String email, String password){
+
+        User user = userRepo.findByEmail(email);
+
+        if(user == null){
+            throw new RuntimeException("User doesn't exist");
+        }
+
+        if(user.getPassword().equals(password)){
+            return user;
+        }
+        else{
+            throw new RuntimeException("Password doesn't match");
+        }
     }
 }
