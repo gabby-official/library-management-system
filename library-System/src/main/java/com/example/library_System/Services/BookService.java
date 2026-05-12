@@ -2,6 +2,7 @@ package com.example.library_System.Services;
 
 import com.example.library_System.Model.Book;
 import com.example.library_System.Repository.BookRepo;
+import com.example.library_System.Repository.LoanRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,9 @@ public class BookService {
 
     @Autowired
     private BookRepo bookRepo;
+
+    @Autowired
+    private LoanRepo loanRepo;
 
     // ➤ Add new book
     public Book addBook(Book book) {
@@ -42,9 +46,13 @@ public class BookService {
 
     // ➤ Delete book
     public void deleteBook(int id) {
+
+        if(loanRepo.existsByBookId(id)){
+            throw new RuntimeException("Book has loan history and cannot be deleted");
+        }
+
         bookRepo.deleteById(id);
     }
-
     // ➤ Search by title or author
     public List<Book> searchByTitleOrAuthor(String keyword){
 

@@ -19,11 +19,14 @@
 
 <ul>
   <li><a href="/add_book">Add Book</a></li>
-  <li><a href="/loans">View All Loans</a></li>
+  <li><a href="/admin/loans">View All Loans</a></li>
 </ul>
 
 <hr>
-
+<p th:if="${message}"
+   th:text="${message}"
+   style="color:red;">
+</p>
 <!-- Book list (optional if you pass books to model) -->
 <h3>All Books</h3>
 
@@ -46,8 +49,14 @@
 
     <td>
       <a th:href="@{'/books/edit/' + ${book.id}}">Edit</a>
-      <a th:href="@{'/books/delete/' + ${book.id}}">Delete</a>
-    </td>
+      <form th:action="@{'/books/delete/' + ${book.id}}"
+            method="post">
+
+        <button type="submit">
+          Delete
+        </button>
+
+      </form>    </td>
   </tr>
 </table>
 

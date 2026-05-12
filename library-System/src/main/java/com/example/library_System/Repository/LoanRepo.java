@@ -27,6 +27,8 @@ public interface LoanRepo extends JpaRepository<Loan, Integer> {
     //Find all active loans
     @Query("SELECT l FROM Loan l WHERE l.returnDate IS NULL")
     List<Loan> findAllActiveLoans();
+
+    boolean existsByBookId(int bookId);
 }
 
 

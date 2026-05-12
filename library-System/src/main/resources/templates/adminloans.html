@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>All Loans</title>
+</head>
+<body>
+
+<h1>All Loans</h1>
+
+<!-- Back to Admin Dashboard -->
+<a href="/admin">Back to Dashboard</a>
+
+<br><br>
+
+<!-- Success/Error Messages -->
+<p th:if="${message}"
+   th:text="${message}"
+   style="color:green;">
+</p>
+
+<p th:if="${error}"
+   th:text="${error}"
+   style="color:red;">
+</p>
+
+<!-- Loans Table -->
+<table border="1">
+
+  <tr>
+    <th>Loan ID</th>
+    <th>Book</th>
+    <th>User</th>
+    <th>Status</th>
+    <th>Borrow Date</th>
+    <th>Return Date</th>
+    <th>Action</th>
+  </tr>
+
+  <tr th:each="loan : ${loans}">
+
+    <td th:text="${loan.id}"></td>
+
+    <td th:text="${loan.book.title}"></td>
+
+    <td th:text="${loan.user.email}"></td>
+
+    <td th:text="${loan.status}"></td>
+
+    <td th:text="${loan.borrowDate}"></td>
+
+    <td th:text="${loan.returnDate}"></td>
+
+    <td>
+
+      <!-- Show Return button only if still borrowed -->
+      <form th:if="${loan.status.name() == 'BORROWED'}"
+            th:action="@{'/return/' + ${loan.book.id}}"
+            method="post">
+
+        <button type="submit">
+          Return Book
+        </button>
+
+      </form>
+
+      <!-- If already returned -->
+      <span th:if="${loan.status.name() == 'RETURNED'}">
+                Returned
+            </span>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<br>
+
+<!-- Logout -->
+<form action="/logout" method="post">
+  <button type="submit">Logout</button>
+</form>
+
+</body>
+</html>
